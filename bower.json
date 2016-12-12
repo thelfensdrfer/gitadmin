@@ -1,0 +1,20 @@
+{
+  "name": "gitadmin",
+  "description": "",
+  "main": "",
+  "authors": [
+    "Tim Helfensdörfer <tim@visualappeal.de>"
+  ],
+  "license": "MIT",
+  "homepage": "",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "semantic": "semantic-ui#^2.2.6"
+  }
+}

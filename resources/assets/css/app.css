@@ -1,0 +1,15 @@
+body {
+	padding: 0 20px;
+	background-color: #222;
+
+	color: #fff;
+	font-family: 'Raleway', sans-serif;
+}
+
+.auth-wrapper {
+	margin-top: 40px!important;
+}
+
+.ui.segment {
+	color: #000;
+}
