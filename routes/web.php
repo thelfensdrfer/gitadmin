@@ -12,9 +12,7 @@
 */
 
 Route::group(['middleware' => 'auth'], function() {
-    Route::get('/', function () {
-        return view('welcome');
-    });
+    Route::get('/', 'DashboardController@index')->name('dashboard');
 
     Route::post('logout', 'Auth\LoginController@logout')->name('auth.logout');
 });

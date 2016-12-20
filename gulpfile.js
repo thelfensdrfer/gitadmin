@@ -14,6 +14,7 @@ const elixir = require('laravel-elixir');
 elixir((mix) => {
     mix.styles([
         '../components/semantic/dist/semantic.min.css',
+        '../components/font-awesome/css/font-awesome.min.css',
         'app.css'
     ]);
 
@@ -22,4 +23,6 @@ elixir((mix) => {
         '../components/semantic/dist/semantic.min.js',
         'app.js'
     ]);
+
+    mix.copy('resources/assets/components/font-awesome/fonts', 'public/fonts');
 });

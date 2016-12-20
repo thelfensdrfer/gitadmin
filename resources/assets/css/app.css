@@ -1,15 +1,24 @@
 body {
 	padding: 0 20px;
-	background-color: #222;
-
-	color: #fff;
 	font-family: 'Raleway', sans-serif;
+	font-size: 1em;
 }
 
 .auth-wrapper {
 	margin-top: 40px!important;
 }
 
-.ui.segment {
-	color: #000;
+.text-button {
+	margin: 0;
+	padding: 0;
+	background-color: transparent;
+	border: none;
+}
+
+pre {
+	white-space: pre-wrap;
+	white-space: -moz-pre-wrap;
+	white-space: -pre-wrap;
+	white-space: -o-pre-wrap;
+	word-wrap: break-word;
 }

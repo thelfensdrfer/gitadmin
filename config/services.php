@@ -21,4 +21,8 @@ return [
         ],
         'level' => env('ROLLBAR_LEVEL'),
     ],
+
+    'gitolite' => [
+        'path' => env('GITOLITE_PATH'),
+    ],
 ];
