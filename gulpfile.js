@@ -19,7 +19,7 @@ elixir((mix) => {
     ]);
 
     mix.scripts([
-    	'../components/jquery/dist/jquery.slim.min.js',
+    	'../components/jquery/dist/jquery.min.js',
         '../components/semantic/dist/semantic.min.js',
         'app.js'
     ]);

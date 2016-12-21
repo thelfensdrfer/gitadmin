@@ -21,14 +21,20 @@ class DashboardController extends Controller
         $user = new RepositoryUser(\Auth::user()->username);
 
         $pathToKeydir = dirname(dirname(Config::get('services.gitolite.path'))) . DIRECTORY_SEPARATOR . 'keydir' . DIRECTORY_SEPARATOR;
-        $keys = array_map(function($path) use ($pathToKeydir) {
+        $keys = array_map(function($path) use ($pathToKeydir, $user) {
+            $name = str_replace($pathToKeydir, '', $path);
+            $nameParts = explode('/', $name);
+            if (count($nameParts) !== 3)
+                throw new \Exception(sprintf('Could not parse key path %s', $name));
+
             return [
-                'name' => str_replace($pathToKeydir, '', $path),
+                'name' => $nameParts[1],
                 'content' => file_get_contents($path)
             ];
         }, $user->getKeys());
 
         return view('dashboard', [
+            'user' => \Auth::user(),
             'repositories' => $config->getRepositoriesForUser($user),
             'keys' => $keys,
         ]);

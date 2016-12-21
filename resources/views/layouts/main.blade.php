@@ -13,13 +13,6 @@
         <!-- Styles -->
         <link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet">
         <link href="{{ asset('css/all.css') }}" rel="stylesheet">
-
-        <!-- Scripts -->
-        <script>
-            window.Laravel = <?php echo json_encode([
-                'csrfToken' => csrf_token(),
-            ]); ?>
-        </script>
     </head>
     <body>
         @yield('main_content')

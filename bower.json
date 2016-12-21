@@ -16,6 +16,7 @@
   ],
   "dependencies": {
     "semantic": "2.2.*",
-    "font-awesome": "4.7.*"
+    "font-awesome": "4.7.*",
+    "jquery": "3.1.*"
   }
 }

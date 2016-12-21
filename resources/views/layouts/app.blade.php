@@ -11,6 +11,9 @@
             {!! Form::close() !!}
         </div>
     </div>
+
+    @include('flash::message')
+
     <div class="ui segment">
         @yield('content')
     </div>

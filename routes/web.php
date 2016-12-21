@@ -14,6 +14,8 @@
 Route::group(['middleware' => 'auth'], function() {
     Route::get('/', 'DashboardController@index')->name('dashboard');
 
+    Route::delete('/keys/{user}/{key}/remove', 'KeyController@destroy')->name('key.remove');
+
     Route::post('logout', 'Auth\LoginController@logout')->name('auth.logout');
 });
 
