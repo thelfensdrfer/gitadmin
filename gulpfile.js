@@ -15,12 +15,14 @@ elixir((mix) => {
     mix.styles([
         '../components/semantic/dist/semantic.min.css',
         '../components/font-awesome/css/font-awesome.min.css',
+        '../components/alertifyjs/dist/css/alertify.css',
         'app.css'
     ]);
 
     mix.scripts([
     	'../components/jquery/dist/jquery.min.js',
         '../components/semantic/dist/semantic.min.js',
+        '../components/alertifyjs/dist/js/alertify.js',
         'app.js'
     ]);
 

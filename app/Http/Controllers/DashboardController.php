@@ -18,7 +18,7 @@ class DashboardController extends Controller
     public function index()
     {
         $config = new Repository(Config::get('services.gitolite.path'), false);
-        $user = new RepositoryUser(\Auth::user()->username);
+        $user = new RepositoryUser(\Auth::user()->username, Config::get('services.gitolite.path'));
 
         $pathToKeydir = dirname(dirname(Config::get('services.gitolite.path'))) . DIRECTORY_SEPARATOR . 'keydir' . DIRECTORY_SEPARATOR;
         $keys = array_map(function($path) use ($pathToKeydir, $user) {

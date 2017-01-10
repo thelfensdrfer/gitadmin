@@ -27,6 +27,31 @@ class User extends Authenticatable
      * @var array
      */
     protected $hidden = [
-        'password', 'remember_token',
+        'password',
+        'remember_token',
     ];
+
+    /**
+     * The attributes that should be mutated to dates.
+     *
+     * @var array
+     */
+    protected $dates = [
+        'valid_until',
+        'created_at',
+        'updated_at',
+    ];
+
+    /**
+     * Check if the user is still valid.
+     *
+     * @return bool
+     */
+    public function getIsValidAttribute()
+    {
+        if ($this->valid_until === null)
+            return true;
+
+        return $this->valid_until->gte(\Carbon\Carbon::now());
+    }
 }

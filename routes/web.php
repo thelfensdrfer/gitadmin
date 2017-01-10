@@ -14,7 +14,15 @@
 Route::group(['middleware' => 'auth'], function() {
     Route::get('/', 'DashboardController@index')->name('dashboard');
 
-    Route::delete('/keys/{user}/{key}/remove', 'KeyController@destroy')->name('key.remove');
+    Route::group(['prefix' => '/keys'], function() {
+        Route::delete('/{user}/{key}/remove', 'KeyController@destroy')->name('key.destroy');
+        Route::post('/{user}', 'KeyController@store')->name('key.store');
+    });
+
+    Route::group(['prefix' => '/benutzer'], function() {
+        Route::get('/', 'UserController@index')->name('user.index');
+        Route::get('/{user}/edit', 'UserController@edit')->name('user.edit');
+    });
 
     Route::post('logout', 'Auth\LoginController@logout')->name('auth.logout');
 });
