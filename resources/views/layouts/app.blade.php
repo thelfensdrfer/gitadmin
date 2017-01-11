@@ -12,7 +12,7 @@
         @endif
         <div class="right menu">
             {!! Form::open(['route' => 'auth.logout', 'class' => 'ui item']) !!}
-                <button type="submit" class="text-button">({{ $user->username }}) Abmelden</button>
+                <button type="submit" class="text-button">({{ $theUser->username }}) Abmelden</button>
             {!! Form::close() !!}
         </div>
     </div>

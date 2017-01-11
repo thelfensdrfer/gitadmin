@@ -20,6 +20,10 @@ class AppServiceProvider extends ServiceProvider
             'access_token' => Config::get('services.rollbar.token.server'),
             'environment' => Config::get('app.env'),
         ], true, true);
+
+        \View::composer('*', function($view){
+            $view->with('theUser', \Auth::user());
+        });
     }
 
     /**

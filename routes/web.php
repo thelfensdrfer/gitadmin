@@ -21,7 +21,9 @@ Route::group(['middleware' => 'auth'], function() {
 
     Route::group(['prefix' => '/benutzer'], function() {
         Route::get('/', 'UserController@index')->name('user.index');
+        Route::post('/', 'UserController@store')->name('user.store');
         Route::get('/{user}/edit', 'UserController@edit')->name('user.edit');
+        Route::put('/{user}', 'UserController@update')->name('user.update');
     });
 
     Route::post('logout', 'Auth\LoginController@logout')->name('auth.logout');

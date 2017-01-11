@@ -5,11 +5,12 @@
 @extends('layouts.app')
 
 @section('content')
-    <h2><i class="fa fa-users"></i> Benutzer</h2>
+    <h2><i class="fa fa-users"></i> Benutzer <small><a href="#" class="user-add" title="Benutzer hinzufügen"><i class="fa fa-plus"></i></a></small></h2>
 
     <table class="ui single line table">
         <thead>
             <tr>
+                <th>Name</th>
                 <th>Benutzername</th>
                 <th>E-Mail Adresse</th>
                 <th>Gültig bis</th>
@@ -20,6 +21,7 @@
         <tbody>
             @foreach ($users as $user)
                 <tr class="{{ $user->isValid ? '' : 'negative' }}">
+                    <td>{{ $user->name }}</td>
                     <td>{{ $user->username }}</td>
                     <td><a href="mailto:{{ $user->email }}">{{ $user->email }}</a></td>
                     <td>{{ ($user->valid_until !== null) ? $user->valid_until->format('d.m.Y') : '' }}</td>
@@ -32,4 +34,6 @@
             @endforeach
         </tbody>
     </table>
+
+    @include('user._add')
 @endsection

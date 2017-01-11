@@ -79,7 +79,9 @@ $.extend(
 });
 
 $(function() {
-    $('.key-delete').on('click', function() {
+    $('.key-delete').on('click', function(e) {
+        e.preventDefault();
+
         var url = $(this).attr('data-url');
         var $modal = $('#confirm-key-delete');
 
@@ -101,8 +103,11 @@ $(function() {
 
         // Show confirmation dialog
         $modal.modal('show');
+
+        return false;
     });
 
+    // Dashboard
     var $keyStoreModal = $('#key-add').modal({
         onApprove: function() {
             $(this).find('form').submit();
@@ -110,9 +115,30 @@ $(function() {
         }
     });
 
-    $('.key-add').on('click', function() {
+    $('.key-add').on('click', function(e) {
+        e.preventDefault();
+
         // Show key creation dialog
         $keyStoreModal.modal('show');
+
+        return false;
+    });
+
+    // User
+    var $userAddModal = $('#user-add').modal({
+        onApprove: function() {
+            $(this).find('form').submit();
+            return false;
+        }
+    });
+
+    $('.user-add').on('click', function(e) {
+        e.preventDefault();
+
+        // Show key creation dialog
+        $userAddModal.modal('show');
+
+        return false;
     });
 
     $('.modal form').on('submit', function(e) {

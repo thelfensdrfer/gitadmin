@@ -3310,16 +3310,16 @@
         },
         {
             "name": "visualappeal/php-gitolite",
-            "version": "1.0.5",
+            "version": "1.0.6",
             "source": {
                 "type": "git",
                 "url": "https://github.com/thelfensdrfer/php-gitolite.git",
-                "reference": "40e60aa16832c46caffb95d6f8dff195c43e0a76"
+                "reference": "46793f6c724316b890f6d8393059dccdddf1eca6"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/thelfensdrfer/php-gitolite/zipball/40e60aa16832c46caffb95d6f8dff195c43e0a76",
-                "reference": "40e60aa16832c46caffb95d6f8dff195c43e0a76",
+                "url": "https://api.github.com/repos/thelfensdrfer/php-gitolite/zipball/46793f6c724316b890f6d8393059dccdddf1eca6",
+                "reference": "46793f6c724316b890f6d8393059dccdddf1eca6",
                 "shasum": ""
             },
             "require": {
@@ -3343,7 +3343,7 @@
                     "email": "tim@visualappeal.de"
                 }
             ],
-            "time": "2016-12-21 15:01:53"
+            "time": "2017-01-10 13:17:58"
         },
         {
             "name": "vlucas/phpdotenv",
