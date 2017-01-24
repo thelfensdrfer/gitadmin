@@ -22,3 +22,14 @@ pre {
 	white-space: -o-pre-wrap;
 	word-wrap: break-word;
 }
+
+.inline {
+	display: inline-block;
+}
+
+.button.no-style {
+	border: none;
+	background: transparent;
+	padding: 0;
+	margin: 0;
+}

@@ -26,6 +26,16 @@
             </div>
 
             <div class="field">
+                <label title="Bis wie lange das Konto gültig sein soll">Gültig bis</label>
+                <div class="ui calendar datepicker">
+                    <div class="ui input left icon">
+                        <i class="fa fa-calendar"></i>
+                        {!! Form::text('valid_until') !!}
+                    </div>
+                </div>
+            </div>
+
+            <div class="field">
                 <div class="ui slider checkbox">
                     {!! Form::checkbox('invite', '1') !!}
                     <label title="E-Mail mit Passwort wird an Benutzer geschickt">Einladung verschicken</label>

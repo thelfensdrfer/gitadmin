@@ -1,5 +1,7 @@
 const elixir = require('laravel-elixir');
 
+var elixirTypscript = require('elixir-typescript');
+
 /*
  |--------------------------------------------------------------------------
  | Elixir Asset Management
@@ -13,18 +15,22 @@ const elixir = require('laravel-elixir');
 
 elixir((mix) => {
     mix.styles([
-        '../components/semantic/dist/semantic.min.css',
-        '../components/font-awesome/css/font-awesome.min.css',
-        '../components/alertifyjs/dist/css/alertify.css',
+        '../../../node_modules/semantic-ui/dist/semantic.min.css',
+        '../../../node_modules/font-awesome/css/font-awesome.min.css',
+        '../../../node_modules/alertify.js/dist/css/alertify.css',
+        '../../../node_modules/semantic-ui-calendar/dist/calendar.min.css',
         'app.css'
     ]);
 
+    mix.typescript('app.ts', 'resources/assets/js/app.js');
+
     mix.scripts([
-    	'../components/jquery/dist/jquery.min.js',
-        '../components/semantic/dist/semantic.min.js',
-        '../components/alertifyjs/dist/js/alertify.js',
+    	'../../../node_modules/jquery/dist/jquery.min.js',
+        '../../../node_modules/semantic-ui/dist/semantic.min.js',
+        '../../../node_modules/alertify.js/dist/js/alertify.js',
+        '../../../node_modules/semantic-ui-calendar/dist/calendar.min.js',
         'app.js'
     ]);
 
-    mix.copy('resources/assets/components/font-awesome/fonts', 'public/fonts');
+    mix.copy('node_modules/font-awesome/fonts', 'public/fonts');
 });

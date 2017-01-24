@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Config;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 use VisualAppeal\Gitolite\Config as Repository;
 use VisualAppeal\Gitolite\User as RepositoryUser;
@@ -57,12 +58,14 @@ class KeyController extends Controller
      */
     public function destroy($username, $key)
     {
-        $user = \Auth::user();
-        if ($user->username !== $username)
-            abort(403, 'Du darfst keinen Schlüssel eines anderen Benutzers löschen!');
+        if (!Auth::user()->admin) {
+            $user = Auth::user();
+            if ($user->username !== $username)
+                abort(403, 'Du darfst keinen Schlüssel eines anderen Benutzers löschen!');
+        }
 
         $config = new Repository(Config::get('services.gitolite.path'), false);
-        $user = new RepositoryUser(\Auth::user()->username, Config::get('services.gitolite.path'));
+        $user = new RepositoryUser($username, Config::get('services.gitolite.path'));
 
         // Try to find key in user config
         $index = $this->findKeyByName($user, $key);
@@ -76,7 +79,7 @@ class KeyController extends Controller
             flash('Der SSH Schlüssel konnte nicht aus dem Konto entfernt werden.', 'warning');
         }
 
-        return redirect()->route('dashboard');
+        return redirect()->back();
     }
 
     /**
@@ -88,9 +91,11 @@ class KeyController extends Controller
      */
     public function store(Request $request, $username)
     {
-        $user = \Auth::user();
-        if ($user->username !== $username)
-            abort(403, 'Du darfst keinen Schlüssel für einen anderen Benutzers erstellen!');
+        if (!Auth::user()->admin) {
+            $user = Auth::user();
+            if ($user->username !== $username)
+                abort(403, 'Du darfst keinen Schlüssel für einen anderen Benutzers erstellen!');
+        }
 
         $this->validate($request, $this->rules);
 
@@ -112,7 +117,7 @@ class KeyController extends Controller
         // Create key directory
         if (!is_dir($directory))
             if (!@mkdir($directory, 0777, true))
-                abort(500, 'Das Verzeichnis für den Public Key konnte nicht erstellt werden!');
+                abort(500, sprintf('Das Verzeichnis für den Public Key %s konnte nicht erstellt werden!', $directory));
 
         // Create public key
         if (!@file_put_contents($path, $request->input('key')))
@@ -123,10 +128,6 @@ class KeyController extends Controller
             abort(500, 'Der Public Key konnte nicht mit dem Server synchronisiert werden!');
         flash('Der SSH Schlüssel wurde erfolgreich erstellt.', 'success');
 
-        dd('test');
-
-        return [
-            'redirect' => route('dashboard'),
-        ];
+        return redirect()->back();
     }
 }

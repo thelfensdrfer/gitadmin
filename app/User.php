@@ -56,4 +56,20 @@ class User extends Authenticatable
 
         return $this->valid_until->gte(\Carbon\Carbon::now());
     }
+
+    /**
+     * Find user by username
+     *
+     * @param string $username
+     * @return App\User
+     */
+    public function findByUsername($username)
+    {
+        $user = self::where('username', '=', $username)->first();
+
+        if ($user === null)
+            abort(404, 'Der Benutzer konnte nicht gefunden werden!');
+
+        return $user;
+    }
 }

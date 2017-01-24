@@ -14,6 +14,11 @@
 Route::group(['middleware' => 'auth'], function() {
     Route::get('/', 'DashboardController@index')->name('dashboard');
 
+    Route::group(['prefix' => '/repositories'], function() {
+        Route::delete('/{user}/{name}/remove', 'RepositoryController@destroy')->name('repository.destroy');
+        Route::post('/{user}', 'RepositoryController@store')->name('repository.store');
+    });
+
     Route::group(['prefix' => '/keys'], function() {
         Route::delete('/{user}/{key}/remove', 'KeyController@destroy')->name('key.destroy');
         Route::post('/{user}', 'KeyController@store')->name('key.store');
@@ -22,8 +27,10 @@ Route::group(['middleware' => 'auth'], function() {
     Route::group(['prefix' => '/benutzer'], function() {
         Route::get('/', 'UserController@index')->name('user.index');
         Route::post('/', 'UserController@store')->name('user.store');
+        Route::get('/{user}', 'UserController@show')->name('user.show');
         Route::get('/{user}/edit', 'UserController@edit')->name('user.edit');
         Route::put('/{user}', 'UserController@update')->name('user.update');
+        Route::delete('/{user}', 'UserController@destroy')->name('user.delete');
     });
 
     Route::post('logout', 'Auth\LoginController@logout')->name('auth.logout');

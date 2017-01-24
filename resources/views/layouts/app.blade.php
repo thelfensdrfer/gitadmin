@@ -5,7 +5,7 @@
         <a href="{{ route('dashboard') }}" class="item {{ ($active == 'dashboard') ? 'active' : '' }}">
             <i class="fa fa-tachometer"></i>&nbsp;Dashboard
         </a>
-        @if ($user->admin)
+        @if ($theUser->admin)
             <a href="{{ route('user.index') }}" class="item {{ ($active == 'user') ? 'active' : '' }}">
                 <i class="fa fa-user"></i>&nbsp;Benutzer
             </a>

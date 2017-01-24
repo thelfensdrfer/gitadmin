@@ -1,18 +1,27 @@
 {
+  "name": "gitadmin",
+  "version": "1.0.0",
   "private": true,
   "scripts": {
     "prod": "gulp --production",
     "dev": "gulp watch"
   },
   "devDependencies": {
-    "bootstrap-sass": "^3.3.7",
-    "gulp": "^3.9.1",
-    "jquery": "^3.1.0",
-    "laravel-elixir": "^6.0.0-14",
-    "laravel-elixir-vue-2": "^0.2.0",
-    "laravel-elixir-webpack-official": "^1.0.2",
-    "lodash": "^4.16.2",
-    "vue": "^2.0.1",
-    "vue-resource": "^1.0.3"
+    "@types/alertify": "0.3.*",
+    "@types/jquery": "2.0.*"
+  },
+  "dependencies": {
+    "alertify.js": "1.0.*",
+    "elixir-typescript": "3.0.*",
+    "font-awesome": "4.7.*",
+    "gulp": "3.9.1",
+    "gulp-filter": "^5.0.0",
+    "install": "0.8.*",
+    "jquery": "3.1.*",
+    "laravel-elixir": "6.0.0-14",
+    "npm": "4.1.*",
+    "semantic-ui": "2.2.*",
+    "semantic-ui-calendar": "0.0.*",
+    "typescript": "2.1.*"
   }
 }

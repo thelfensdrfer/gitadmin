@@ -3,8 +3,12 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
+
+use VisualAppeal\Gitolite\Config as Repository;
+use VisualAppeal\Gitolite\User as RepositoryUser;
 
 use App\User;
 use App\Mail\UserInvite;
@@ -29,6 +33,39 @@ class UserController extends Controller
 
         return view('user.index', [
             'users' => $users,
+        ]);
+    }
+
+    /**
+     * Display a listing of the resource.
+     *
+     * @param string $username
+     * @return \Illuminate\Http\Response
+     */
+    public function show($username)
+    {
+        $user = User::findByUsername($username);
+
+        $config = new Repository(Config::get('services.gitolite.path'), false);
+        $gitUser = new RepositoryUser($username, Config::get('services.gitolite.path'));
+
+        $pathToKeydir = dirname(dirname(Config::get('services.gitolite.path'))) . DIRECTORY_SEPARATOR . 'keydir' . DIRECTORY_SEPARATOR;
+        $keys = array_map(function($path) use ($pathToKeydir, $user) {
+            $name = str_replace($pathToKeydir, '', $path);
+            $nameParts = explode('/', $name);
+            if (count($nameParts) !== 3)
+                throw new \Exception(sprintf('Could not parse key path %s', $name));
+
+            return [
+                'name' => $nameParts[1],
+                'content' => file_get_contents($path)
+            ];
+        }, $gitUser->getKeys());
+
+        return view('user.show', [
+            'user' => $user,
+            'repositories' => $config->getRepositoriesForUser($gitUser),
+            'keys' => $keys,
         ]);
     }
 
@@ -70,34 +107,59 @@ class UserController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param string $name
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit($username)
     {
-        //
+        $user = User::findByUsername($username);
+
+        return view('user.edit', [
+            'user' => $user,
+        ]);
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param \Illuminate\Http\Request  $request
+     * @param string $username
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, $username)
     {
-        //
+        $user = User::findByUsername($username);
+
+        $rules = $this->rules;
+        $rules['username'] = $rules['username'] . ',' . $user->id;
+        $rules['email'] = $rules['email'] . ',' . $user->id;
+        $this->validate($request, $rules);
+
+        $data = $request->all();
+        $data['admin'] = $request->has('admin');
+
+        $user->fill($data);
+        if (!$user->save())
+            abort(500, 'Der Benutzer konnte nicht gespeichert werden!');
+
+        flash('Der Benutzer wurde erfolgreich gespeichert.', 'success');
+
+        return redirect()->route('user.index');
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param string $username
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy($username)
     {
-        //
+        $user = User::findByUsername($username);
+        $user->delete();
+
+        flash('Der Benutzer wurde erfolgreich gelöscht.', 'info');
+
+        return redirect()->route('user.index');
     }
 }
