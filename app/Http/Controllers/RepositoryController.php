@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Auth;
 
 use VisualAppeal\Gitolite\Config as Repository;
 use VisualAppeal\Gitolite\User as RepositoryUser;
+use VisualAppeal\Gitolite\Permission as RepositoryPermission;
 
 class RepositoryController extends Controller
 {
@@ -20,41 +21,43 @@ class RepositoryController extends Controller
         'name' => 'required',
     ];
 
+    public function index()
+    {
+        $config = new Repository(Config::get('services.gitolite.path'), false);
+
+        $repositories = $config->getRepositories();
+
+        return view('repository.index', [
+            'repositories' => $repositories,
+        ]);
+    }
+
     /**
-     * Destroy public key of user.
+     * Destroy repository.
      *
-     * @param string $username
-     * @param string $key
+     * @param string $name
      * @return Response
      */
-    public function destroy($username, $key)
+    public function destroy($name)
     {
-        if (!Auth::user()->admin) {
-            $user = Auth::user();
-            if ($user->username !== $username)
-                abort(403, 'Du darfst keinen Schlüssel eines anderen Benutzers löschen!');
-        }
+        if (!Auth::user()->admin)
+            abort(403, 'Du darfst kein Repository löschen!');
 
         $config = new Repository(Config::get('services.gitolite.path'), false);
         $user = new RepositoryUser($username, Config::get('services.gitolite.path'));
 
-        // Try to find key in user config
-        $index = $this->findKeyByName($user, $key);
-        if ($index === null)
-            abort(404, 'Der Schlüssel wurde nicht in deinem Konto gefunden!');
+        if (!$config->deleteRepository($name))
+            abort(500, 'Das Repository konnte nicht gelöscht werden!');
 
-        if ($user->removeKey($index)) {
-            $config->saveAndPush(sprintf('[GitAdmin] %s Schlüssel von %s entfernt', $key, $username));
-            flash('Der SSH Schlüssel wurde aus dem Konto entfernt.', 'info');
-        } else {
-            flash('Der SSH Schlüssel konnte nicht aus dem Konto entfernt werden.', 'warning');
-        }
+        $config->save();
+
+        flash('Das Repository wurde gelöscht.', 'info');
 
         return redirect()->back();
     }
 
     /**
-     * Create new public key for user.
+     * Create new repository for user.
      *
      * @param Request $request
      * @param string $username
@@ -68,12 +71,17 @@ class RepositoryController extends Controller
         $this->validate($request, $this->rules);
 
         $config = new Repository(Config::get('services.gitolite.path'), false);
-        $user = new RepositoryUser(\Auth::user()->username, Config::get('services.gitolite.path'));
+        $user = new RepositoryUser($username, Config::get('services.gitolite.path'));
         $name = $request->input('name');
 
         $repository = $config->createOrFindRepository($name);
+        $permission = new RepositoryPermission;
+        $permission->setPermission(RepositoryPermission::PERMISSION_READ_WRITE);
+        $permission->addUser($user);
+        $repository->addPermission($permission);
+        $config->save();
 
-        flash('Der SSH Schlüssel wurde erfolgreich erstellt.', 'success');
+        flash('Das Repository wurde erfolgreich erstellt.', 'success');
 
         return redirect()->back();
     }

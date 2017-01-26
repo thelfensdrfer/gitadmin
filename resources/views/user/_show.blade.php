@@ -1,6 +1,6 @@
 <h3><i class="fa fa-database"></i> Repositories @if ($theUser->admin)<small><a href="#" title="Repository hinzufügen" class="repository-add"><i class="fa fa-plus"></i></a></small>@endif</h3>
 @foreach ($repositories as $name => $repository)
-    <h3>{{ $name }}</h3>
+    <h3>{{ $name }} @if ($theUser->admin)<small><a href="#" data-url="{{ route('repository.destroy', ['name' => $name]) }}" title="Repository löschen" class="repository-delete"><i class="fa fa-trash"></i></a></small>@endif</h3>
     <pre><code>git clone ssh://git@l120v.studs.math.uni-wuppertal.de/{{ $name }}.git</code></pre>
 @endforeach
 

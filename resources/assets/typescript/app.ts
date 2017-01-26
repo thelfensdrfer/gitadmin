@@ -66,10 +66,9 @@ $(function() {
         type: 'date',
     });
 
-    function deleteModal(e: JQueryEventObject, modalId: string, cancelId: string, approveId: string) {
+    function deleteModal(e: JQueryEventObject, url: string, modalId: string, cancelId: string, approveId: string) {
         e.preventDefault();
 
-        var url = $(this).attr('data-url');
         var $modal = $(modalId);
 
         // Cancel deletion
@@ -95,11 +94,11 @@ $(function() {
     }
 
     $('.key-delete').on('click', function(e) {
-        deleteModal(e, '#confirm-key-delete', '#confirm-key-delete-cancel', '#confirm-key-delete-approve');
+        deleteModal(e, $(this).attr('data-url'), '#confirm-key-delete', '#confirm-key-delete-cancel', '#confirm-key-delete-approve');
     });
 
     $('.repository-delete').on('click', function(e) {
-        deleteModal(e, '#confirm-repository-delete', '#confirm-repository-delete-cancel', '#confirm-repository-delete-approve');
+        deleteModal(e, $(this).attr('data-url'), '#confirm-repository-delete', '#confirm-repository-delete-cancel', '#confirm-repository-delete-approve');
     });
 
     // Dashboard

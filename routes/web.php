@@ -15,7 +15,11 @@ Route::group(['middleware' => 'auth'], function() {
     Route::get('/', 'DashboardController@index')->name('dashboard');
 
     Route::group(['prefix' => '/repositories'], function() {
-        Route::delete('/{user}/{name}/remove', 'RepositoryController@destroy')->name('repository.destroy');
+        Route::get('/', 'RepositoryController@index')->name('repository.index');
+        Route::get('/{name}', 'RepositoryController@show')->name('repository.show');
+        Route::get('/{name}/edit', 'RepositoryController@edit')->name('repository.edit');
+
+        Route::delete('/{name}/remove', 'RepositoryController@destroy')->name('repository.destroy');
         Route::post('/{user}', 'RepositoryController@store')->name('repository.store');
     });
 
@@ -30,18 +34,16 @@ Route::group(['middleware' => 'auth'], function() {
         Route::get('/{user}', 'UserController@show')->name('user.show');
         Route::get('/{user}/edit', 'UserController@edit')->name('user.edit');
         Route::put('/{user}', 'UserController@update')->name('user.update');
-        Route::delete('/{user}', 'UserController@destroy')->name('user.delete');
+        Route::delete('/{user}', 'UserController@destroy')->name('user.destroy');
     });
 
     Route::post('logout', 'Auth\LoginController@logout')->name('auth.logout');
 });
 
 Route::group(['middleware' => 'guest'], function() {
-    // Authentication Routes...
     Route::get('login', 'Auth\LoginController@showLoginForm')->name('auth.login');
     Route::post('login', 'Auth\LoginController@login')->name('auth.dologin');
 
-    // Password Reset Routes...
     Route::get('password/reset', 'Auth\ForgotPasswordController@showLinkRequestForm');
     Route::post('password/email', 'Auth\ForgotPasswordController@sendResetLinkEmail');
     Route::get('password/reset/{token}', 'Auth\ResetPasswordController@showResetForm');

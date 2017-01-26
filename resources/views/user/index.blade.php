@@ -28,7 +28,7 @@
                     <td>@if ($user->admin) <i class="fa fa-check"></i> @endif</td>
                     <td class="center aligned">
                         <a href="{{ route('user.edit', ['user' => $user->username]) }}" title="Benutzer bearbeiten"><i class="fa fa-pencil"></i></a>
-                        {!! Form::open(['route' => ['user.delete', 'user' => $user->username], 'class' => 'inline', 'method' => 'delete']) !!}
+                        {!! Form::open(['route' => ['user.destroy', 'user' => $user->username], 'class' => 'inline', 'method' => 'delete']) !!}
                             <button type="submit" title="Benutzer löschen" class="button no-style"><i class="fa fa-trash"></i></a>
                         {!! Form::close() !!}
                     </td>

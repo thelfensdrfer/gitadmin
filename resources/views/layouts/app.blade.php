@@ -10,6 +10,11 @@
                 <i class="fa fa-user"></i>&nbsp;Benutzer
             </a>
         @endif
+        @if ($theUser->admin)
+            <a href="{{ route('repository.index') }}" class="item {{ ($active == 'repository') ? 'active' : '' }}">
+                <i class="fa fa-database"></i>&nbsp;Repositories
+            </a>
+        @endif
         <div class="right menu">
             {!! Form::open(['route' => 'auth.logout', 'class' => 'ui item']) !!}
                 <button type="submit" class="text-button">({{ $theUser->username }}) Abmelden</button>
