@@ -40,7 +40,7 @@ class LoginController extends Controller
     /**
      * Handle an authentication attempt.
      *
-     * @return Response
+     * @return Illuminate\Http\Response
      */
     public function authenticate()
     {

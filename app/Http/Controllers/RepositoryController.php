@@ -21,6 +21,11 @@ class RepositoryController extends Controller
         'name' => 'required',
     ];
 
+    /**
+     * Display a list of repositories
+     *
+     * @return Illuminate\Http\Response
+     */
     public function index()
     {
         $config = new Repository(Config::get('services.gitolite.path'), false);
@@ -33,10 +38,26 @@ class RepositoryController extends Controller
     }
 
     /**
+     * Display a repository.
+     *
+     * @param string $name
+     * @return Illuminate\Http\Response
+     */
+    public function show($name)
+    {
+        $config = new Repository(Config::get('services.gitolite.path'), false);
+        $repository = $config->findRepository($name);
+
+        return view('repository.show', [
+            'repository' => $repository,
+        ]);
+    }
+
+    /**
      * Destroy repository.
      *
      * @param string $name
-     * @return Response
+     * @return Illuminate\Http\Response
      */
     public function destroy($name)
     {
@@ -44,7 +65,6 @@ class RepositoryController extends Controller
             abort(403, 'Du darfst kein Repository löschen!');
 
         $config = new Repository(Config::get('services.gitolite.path'), false);
-        $user = new RepositoryUser($username, Config::get('services.gitolite.path'));
 
         if (!$config->deleteRepository($name))
             abort(500, 'Das Repository konnte nicht gelöscht werden!');
@@ -59,9 +79,9 @@ class RepositoryController extends Controller
     /**
      * Create new repository for user.
      *
-     * @param Request $request
+     * @param Illuminate\Http\Request $request
      * @param string $username
-     * @return Response
+     * @return Illuminate\Http\Response
      */
     public function store(Request $request, $username)
     {

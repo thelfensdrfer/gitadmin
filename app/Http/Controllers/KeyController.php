@@ -54,7 +54,7 @@ class KeyController extends Controller
      *
      * @param string $username
      * @param string $key
-     * @return Response
+     * @return Illuminate\Http\Response
      */
     public function destroy($username, $key)
     {
@@ -85,9 +85,9 @@ class KeyController extends Controller
     /**
      * Create new public key for user.
      *
-     * @param Request $request
+     * @param Illuminate\Http\Request $request
      * @param string $username
-     * @return Response
+     * @return Illuminate\Http\Response
      */
     public function store(Request $request, $username)
     {
