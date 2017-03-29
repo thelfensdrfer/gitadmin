@@ -58,9 +58,7 @@ $(function () {
     $('.datepicker').calendar({
         type: 'date'
     });
-    function deleteModal(e, modalId, cancelId, approveId) {
-        e.preventDefault();
-        var url = $(this).attr('data-url');
+    function deleteModal(e, url, modalId, cancelId, approveId) {
         var $modal = $(modalId);
         // Cancel deletion
         $modal
@@ -81,10 +79,10 @@ $(function () {
         return false;
     }
     $('.key-delete').on('click', function (e) {
-        deleteModal(e, '#confirm-key-delete', '#confirm-key-delete-cancel', '#confirm-key-delete-approve');
+        deleteModal(e, $(this).attr('data-url'), '#confirm-key-delete', '#confirm-key-delete-cancel', '#confirm-key-delete-approve');
     });
     $('.repository-delete').on('click', function (e) {
-        deleteModal(e, '#confirm-repository-delete', '#confirm-repository-delete-cancel', '#confirm-repository-delete-approve');
+        deleteModal(e, $(this).attr('data-url'), '#confirm-repository-delete', '#confirm-repository-delete-cancel', '#confirm-repository-delete-approve');
     });
     // Dashboard
     var $keyStoreModal = $('#key-add').modal({
@@ -94,7 +92,6 @@ $(function () {
         }
     });
     $('.key-add').on('click', function (e) {
-        e.preventDefault();
         // Show key creation dialog
         $keyStoreModal.modal('show');
         return false;
@@ -107,7 +104,7 @@ $(function () {
         }
     });
     $('.repository-add').on('click', function (e) {
-        e.preventDefault();
+        console.debug('Add new repository');
         // Show repository creation dialog
         $repositoryStoreModal.modal('show');
         return false;
@@ -120,13 +117,11 @@ $(function () {
         }
     });
     $('.user-add').on('click', function (e) {
-        e.preventDefault();
         // Show key creation dialog
         $userAddModal.modal('show');
         return false;
     });
     $('.modal form').on('submit', function (e) {
-        e.preventDefault();
         var $form = $(this);
         var $submitButton = $form.find('button[type="submit"]');
         $form.addClass('loading');
@@ -136,7 +131,6 @@ $(function () {
             data: $form.serialize(),
             success: function (data) {
                 $form.removeClass('loading');
-                console.log(data);
                 if (data && data.redirect) {
                     window.location.href = data.redirect;
                 }

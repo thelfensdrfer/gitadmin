@@ -10,15 +10,13 @@
     <pre><code>{{ $key['content'] }}</code></pre>
 @endforeach
 
-@if (!$dashboard)
-    @include('repository._delete', [
-        'user' => $user,
-    ])
+@include('repository._delete', [
+    'user' => $user,
+])
 
-    @include('repository._add', [
-        'user' => $user,
-    ])
-@endif
+@include('repository._add', [
+    'user' => $user,
+])
 
 @include('key._delete', [
     'user' => $user,

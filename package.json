@@ -14,14 +14,14 @@
     "alertify.js": "1.0.*",
     "elixir-typescript": "3.0.*",
     "font-awesome": "4.7.*",
-    "gulp": "3.9.1",
-    "gulp-filter": "^5.0.0",
+    "gulp": "3.9.*",
+    "gulp-filter": "5.0.*",
     "install": "0.8.*",
-    "jquery": "3.1.*",
-    "laravel-elixir": "6.0.0-14",
+    "jquery": "3.2.*",
+    "laravel-elixir": "6.0.0-15",
     "npm": "4.1.*",
     "semantic-ui": "2.2.*",
     "semantic-ui-calendar": "0.0.*",
-    "typescript": "2.1.*"
+    "typescript": "2.2.*"
   }
 }

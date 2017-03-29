@@ -67,8 +67,6 @@ $(function() {
     });
 
     function deleteModal(e: JQueryEventObject, url: string, modalId: string, cancelId: string, approveId: string) {
-        e.preventDefault();
-
         var $modal = $(modalId);
 
         // Cancel deletion
@@ -110,8 +108,6 @@ $(function() {
     });
 
     $('.key-add').on('click', function(e) {
-        e.preventDefault();
-
         // Show key creation dialog
         $keyStoreModal.modal('show');
 
@@ -127,7 +123,7 @@ $(function() {
     });
 
     $('.repository-add').on('click', function(e) {
-        e.preventDefault();
+        console.debug('Add new repository');
 
         // Show repository creation dialog
         $repositoryStoreModal.modal('show');
@@ -144,8 +140,6 @@ $(function() {
     });
 
     $('.user-add').on('click', function(e) {
-        e.preventDefault();
-
         // Show key creation dialog
         $userAddModal.modal('show');
 
@@ -153,8 +147,6 @@ $(function() {
     });
 
     $('.modal form').on('submit', function(e) {
-        e.preventDefault();
-
         var $form = $(this);
         var $submitButton = $form.find('button[type="submit"]');
 
@@ -166,8 +158,6 @@ $(function() {
             data: $form.serialize(),
             success: function(data) {
                 $form.removeClass('loading');
-
-                console.log(data);
 
                 if (data && data.redirect) {
                     window.location.href = data.redirect;
