@@ -19,7 +19,7 @@
     "install": "0.8.*",
     "jquery": "3.2.*",
     "laravel-elixir": "6.0.0-15",
-    "npm": "4.1.*",
+    "npm": "6.14.*",
     "semantic-ui": "2.2.*",
     "semantic-ui-calendar": "0.0.*",
     "typescript": "2.2.*"
